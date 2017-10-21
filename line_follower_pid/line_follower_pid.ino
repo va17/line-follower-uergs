@@ -5,12 +5,12 @@ AF_DCMotor motor_dir(4); //Seleciona o motor 4
 
 #define Kp 0.3 // 0.06 // 0.3
 #define Kd 4.5 // 0.075 Kp < Kd
-#define Ki 0 // TBD
+#define Ki 3.1 // TBD
 #define rightMaxSpeed 96//96 // max speed
 #define leftMaxSpeed 70//70 // max speed
 #define rightBaseSpeed 66 // straight line speed
 #define leftBaseSpeed 40  // straight line speed
- 
+
 int SENSOR1, SENSOR2, SENSOR3;
  
 //deslocamentos de calibracao
@@ -19,6 +19,10 @@ int leftOffset = 0, rightOffset = 0, centre = 0;
 int threshold = 200;
 
 int lastError = 0;
+int I = 0;
+
+unsigned long time;
+unsigned long lastTime = 0;
  
 //Rotina de calibracao do sensor
 void calibrate()
@@ -63,7 +67,16 @@ void loop()
   
   int error = position - 1000;
 
-  int motorSpeed = Kp * error + Kd * (error - lastError);
+  time = millis();
+  int E = error - lastError;
+  if(lastTime == 0) lastTime = time;
+  int deltaTime = time - lastTime;
+  lastTime = time;
+
+  int P = error;
+  int I = I + (E*deltaTime);//I + error;
+  int D = (error - lastError);
+  int motorSpeed = (Kp * P) + (Kd * D) + (Ki * I);
   lastError = error;
   
   int rightMotorSpeed = rightBaseSpeed + motorSpeed;
