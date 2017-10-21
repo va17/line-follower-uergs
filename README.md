@@ -7,8 +7,8 @@ The event happens in November 9th, 2017.
 ### Car Parts
 
 3 optic infrared sensor and led<br>
-3 330(omega) resistors<br>
-3 10k(omega) resistors<br>
+3 330Ω resistors<br>
+3 10kΩ resistors<br>
 2 brushed motors<br>
 1 Arduino Uno<br>
 
