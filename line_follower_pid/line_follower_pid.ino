@@ -26,7 +26,7 @@ unsigned long lastTime = 0;                      // Inicializa variável que ar
 // ----------------------- SETUP
 void setup()
 {
-  calibrate(); // Executa rotina de calibração
+  calibrate(); // Execute rotina de calibração
   delay(3000);
   Serial.begin(9600);
   send_speed_to_motor(rightMaxSpeed, leftMaxSpeed);
